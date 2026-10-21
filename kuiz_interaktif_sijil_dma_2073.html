@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="ms">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kuiz Penilaian DMA 2073 - Bab 1: CNC Lathe Features & Accessories</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @media print {
+      body * {
+        visibility: hidden;
+      }
+      #certificate-printable, #certificate-printable * {
+        visibility: visible;
+      }
+      #certificate-printable {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100%;
+        margin: 0;
+        padding: 32px;
+        box-shadow: none !important;
+        border: 10px double #1e3a8a !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+    .custom-gradient {
+      background: linear-gradient(135deg, #1e3a8a 0%, #0284c7 100%);
+    }
+  </style>
+</head>
+<body class="bg-slate-100 font-sans text-slate-800 min-h-screen flex flex-col justify-between">
+
+  <!-- Header Section -->
+  <header class="custom-gradient text-white shadow-lg py-5 px-6 no-print">
+    <div class="max-w-5xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
+      <div class="flex items-center space-x-3">
+        <i class="fa-solid fa-gears text-3xl text-amber-300"></i>
+        <div>
+          <h1 class="text-xl font-bold tracking-tight">DMA 2073: CNC LARIK (CNC LATHE)</h1>
+          <p class="text-xs text-blue-100 uppercase tracking-widest font-semibold">Kolej Vokasional Labuan | Bab 1: CNC Lathe Features & Accessories</p>
+        </div>
+      </div>
+      <div class="text-right flex items-center gap-2 bg-blue-900/40 px-3 py-1.5 rounded-lg border border-blue-300/30">
+        <i class="fa-solid fa-user-graduate text-amber-300"></i>
+        <span id="header-student-info" class="text-sm font-medium">Penilaian Dalam Talian</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-4xl mx-auto w-full p-4 sm:p-6 my-auto">
+
+    <!-- Screen 1: Registration Form -->
+    <div id="start-screen" class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 sm:p-10 transition-all">
+      <div class="text-center max-w-xl mx-auto">
+        <div class="w-16 h-16 bg-blue-100 text-blue-700 rounded-2xl flex items-center justify-center mx-auto mb-4 text-2xl shadow-inner">
+          <i class="fa-solid fa-clipboard-check"></i>
+        </div>
+        <h2 class="text-2xl font-bold text-slate-800">Ujian Penilaian Interaktif Bab 1</h2>
+        <p class="text-slate-600 mt-2 text-sm leading-relaxed">
+          Ujian ini mengandungi <strong>20 soalan objektif</strong> berdasarkan Nota Kuliah 1 (DMA 2073/NK01/06) merangkumi keselamatan mesin, paksi & komponen, menara pemotong (turret), spesifikasi bindu, mata alat pemotong, serta panel kawalan. Sijil Pencapaian akan dijana secara automatik di akhir penilaian.
+        </p>
+      </div>
+
+      <div class="mt-8 max-w-md mx-auto bg-slate-50 p-6 rounded-xl border border-slate-200">
+        <form id="student-form" onsubmit="startQuiz(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Nama Penuh Pelajar <span class="text-red-500">*</span></label>
+            <input type="text" id="student-name" required placeholder="Contoh: Ahmad Syafiq bin Razak" 
+              class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-sm">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Angka Giliran / No. Matrik <span class="text-red-500">*</span></label>
+            <input type="text" id="student-id" required placeholder="Contoh: KVL2402001" 
+              class="w-full px-4 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 bg-white text-sm uppercase">
+          </div>
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase mb-1">Program Pengajian</label>
+            <input type="text" id="student-program" readonly value="Diploma Teknologi Pemesinan Industri" 
+              class="w-full px-4 py-2.5 rounded-lg border border-slate-200 bg-slate-100 text-slate-600 text-sm font-medium cursor-not-allowed">
+          </div>
+          <button type="submit" 
+            class="w-full mt-4 py-3 bg-blue-600 hover:bg-blue-700 active:scale-[0.99] text-white font-bold rounded-lg shadow-md transition flex items-center justify-center gap-2">
+            <span>Mula Menjawab Kuiz</span>
+            <i class="fa-solid fa-arrow-right"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- Screen 2: Quiz Assessment -->
+    <div id="quiz-screen" class="hidden">
+      <!-- Progress Bar & Counter -->
+      <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-4 mb-4">
+        <div class="flex justify-between items-center text-sm font-semibold mb-2">
+          <span class="text-blue-700"><i class="fa-solid fa-list-check mr-1.5"></i> Soalan <span id="current-q-num">1</span> daripada 20</span>
+          <span class="text-slate-600 font-mono bg-slate-100 px-3 py-0.5 rounded-md border border-slate-200" id="score-counter">Markah: 0 / 20</span>
+        </div>
+        <div class="w-full bg-slate-200 h-2.5 rounded-full overflow-hidden">
+          <div id="progress-bar" class="bg-blue-600 h-full w-[5%] transition-all duration-300"></div>
+        </div>
+      </div>
+
+      <!-- Question Card -->
+      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-6 sm:p-8">
+        <div class="mb-5">
+          <span id="question-tag" class="inline-block px-3 py-1 text-xs font-bold uppercase rounded-full bg-blue-100 text-blue-800 mb-2">
+            Unit 1.1: Keselamatan
+          </span>
+          <h3 id="question-text" class="text-lg sm:text-xl font-bold text-slate-800 leading-snug">
+            Teks soalan akan dipaparkan di sini...
+          </h3>
+        </div>
+
+        <!-- Multiple Choice Options -->
+        <div id="options-container" class="space-y-3"></div>
+
+        <!-- Rationale Feedback Box -->
+        <div id="feedback-box" class="hidden mt-6 p-4 rounded-xl border">
+          <h4 id="feedback-title" class="font-bold text-sm mb-1"></h4>
+          <p id="feedback-desc" class="text-sm text-slate-700"></p>
+        </div>
+
+        <!-- Next Question Action Button -->
+        <div class="mt-6 flex justify-end">
+          <button id="next-btn" onclick="nextQuestion()" disabled
+            class="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow disabled:opacity-40 disabled:cursor-not-allowed transition flex items-center gap-2">
+            <span>Seterusnya</span>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Screen 3: Results & Certificate Section -->
+    <div id="result-screen" class="hidden space-y-6">
+      <div class="bg-white rounded-2xl shadow-xl border border-slate-200 p-8 text-center no-print">
+        <div id="result-icon" class="w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4"></div>
+        <h2 id="result-title" class="text-2xl font-black text-slate-800"></h2>
+        <p id="result-subtitle" class="text-slate-600 text-sm mt-1 max-w-md mx-auto"></p>
+
+        <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 my-6 max-w-xl mx-auto">
+          <div class="bg-slate-50 p-3 rounded-xl border border-slate-200">
+            <span class="block text-xs text-slate-500 uppercase font-semibold">Jumlah Soalan</span>
+            <span class="text-xl font-bold text-slate-800">20</span>
+          </div>
+          <div class="bg-emerald-50 p-3 rounded-xl border border-emerald-200">
+            <span class="block text-xs text-emerald-600 uppercase font-semibold">Jawapan Betul</span>
+            <span id="res-correct" class="text-xl font-bold text-emerald-700">0</span>
+          </div>
+          <div class="bg-rose-50 p-3 rounded-xl border border-rose-200">
+            <span class="block text-xs text-rose-600 uppercase font-semibold">Jawapan Salah</span>
+            <span id="res-wrong" class="text-xl font-bold text-rose-700">0</span>
+          </div>
+          <div class="bg-blue-50 p-3 rounded-xl border border-blue-200">
+            <span class="block text-xs text-blue-600 uppercase font-semibold">Peratusan</span>
+            <span id="res-percentage" class="text-xl font-bold text-blue-700">0%</span>
+          </div>
+        </div>
+
+        <div class="flex flex-wrap justify-center gap-3">
+          <button onclick="window.print()" 
+            class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-semibold rounded-lg shadow transition flex items-center gap-2">
+            <i class="fa-solid fa-print"></i> Cetak / Simpan Sijil PDF
+          </button>
+          <button onclick="restartQuiz()" 
+            class="px-5 py-2.5 bg-slate-700 hover:bg-slate-800 text-white font-semibold rounded-lg shadow transition flex items-center gap-2">
+            <i class="fa-solid fa-rotate-right"></i> Ulang Semula Kuiz
+          </button>
+        </div>
+      </div>
+
+      <!-- Certificate Layout (Printable) -->
+      <div id="certificate-container">
+        <div id="certificate-printable" class="bg-white border-8 border-double border-blue-900 rounded-2xl p-8 sm:p-12 text-center relative shadow-2xl overflow-hidden">
+          <!-- Corner Accents -->
+          <div class="absolute top-3 left-3 w-12 h-12 border-t-4 border-l-4 border-amber-500"></div>
+          <div class="absolute top-3 right-3 w-12 h-12 border-t-4 border-r-4 border-amber-500"></div>
+          <div class="absolute bottom-3 left-3 w-12 h-12 border-b-4 border-l-4 border-amber-500"></div>
+          <div class="absolute bottom-3 right-3 w-12 h-12 border-b-4 border-r-4 border-amber-500"></div>
+
+          <!-- Header KV -->
+          <div class="mb-4">
+            <h4 class="text-xs tracking-widest font-bold text-slate-500 uppercase">Kementerian Pendidikan Malaysia &bull; Kolej Vokasional</h4>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-blue-900 tracking-wider uppercase font-serif mt-1">SIJIL PENCAPAIAN PENILAIAN</h2>
+            <p class="text-xs text-amber-700 font-bold uppercase tracking-widest mt-0.5">Jabatan Teknologi Mekanikal & Pembuatan (Teknologi Pemesinan Industri)</p>
+          </div>
+
+          <p class="text-xs text-slate-500 mt-6 italic">Dengan ini diperakukan bahawa</p>
+          <h3 id="cert-name" class="text-2xl sm:text-3xl font-bold text-slate-900 border-b-2 border-slate-300 inline-block px-10 py-1 my-2 uppercase font-serif">NAMA PELAJAR</h3>
+          <p id="cert-id" class="text-xs font-mono text-slate-600 font-semibold mb-4">ANGKA GILIRAN: KVL000000</p>
+
+          <p class="text-sm text-slate-700 max-w-xl mx-auto leading-relaxed">
+            Telah melengkapkan ujian penilaian teori dalam talian bagi kursus:
+          </p>
+          <p class="text-base font-bold text-blue-950 mt-1 uppercase">
+            DMA 2073: CNC LARIK (CHAPTER 1: CNC LATHE FEATURES AND ACCESSORIES)
+          </p>
+          <div class="my-5 inline-block bg-blue-50 border border-blue-200 px-6 py-2 rounded-full text-sm font-bold text-blue-900">
+            Pencapaian: <span id="cert-grade" class="text-emerald-700">CEMERLANG (100%)</span>
+          </div>
+
+          <!-- Signatures & Date -->
+          <div class="mt-8 pt-6 border-t border-slate-200 flex justify-between items-end text-xs text-slate-600">
+            <div class="text-left">
+              <p>Tarikh Penilaian: <strong id="cert-date" class="text-slate-800">--/--/----</strong></p>
+              <p>Kod Nota Kuliah: <strong>DMA 2073/NK01/06</strong></p>
+            </div>
+            <div class="text-center">
+              <div class="w-16 h-16 bg-amber-50 border-2 border-dashed border-amber-500 rounded-full flex items-center justify-center mx-auto mb-1 text-amber-700 font-serif font-black text-[10px] leading-tight p-1">
+                DISAHKAN LULUS
+              </div>
+            </div>
+            <div class="text-right">
+              <div class="w-40 border-b border-slate-400 mx-auto mb-1"></div>
+              <p class="font-bold text-slate-800">Pensyarah Kursus DMA 2073</p>
+              <p class="text-[10px] text-slate-500">Program Teknologi Pemesinan Industri</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white border-t border-slate-200 py-3 text-center text-xs text-slate-500 no-print">
+    Jabatan Teknologi Mekanikal dan Pembuatan &bull; Kursus DMA 2073 CNC Larik &bull; Kolej Vokasional
+  </footer>
+
+  <script>
+    const quizData = [
+      {
+        tag: "1.1 Machine Safety",
+        question: "Mengapakah pintu keselamatan (Door) mesin CNC larik mesti sentiasa ditutup semasa operasi pemesinan sedang berjalan?",
+        options: [
+          { text: "Mengelakkan bahagian atau mata alat yang pecah serta tatal panas daripada terpelanting keluar", isCorrect: true, rationale: "Pintu dilengkapi tingkap kaca berimpak tinggi khas untuk melindungi pengendali jika bahan kerja atau mata alat pecah semasa berputar laju." },
+          { text: "Memastikan kelajuan putaran pengumpar mencapai nilai maksimum", isCorrect: false, rationale: "Kelajuan pengumpar dikawal oleh kod S dan sistem pemacu motor, bukan kerana pintu ditutup semata-mata." },
+          { text: "Menjimatkan penggunaan tenaga elektrik pada motor utama", isCorrect: false, rationale: "Penutupan pintu adalah untuk tujuan keselamatan mekanikal dan bukannya penjimatan kuasa elektrik." },
+          { text: "Mengurangkan kehausan pada mata alat sisipan karbida", isCorrect: false, rationale: "Kehausan mata alat dipengaruhi oleh parameter pemotongan dan cecair penyejuk, bukan pintu mesin." }
+        ]
+      },
+      {
+        tag: "1.2 Introduction to CNC Lathe",
+        question: "Apakah definisi yang paling tepat bagi kawalan berangka (Numerical Control / NC)?",
+        options: [
+          { text: "Teknik operasi mesin secara automatik mengikut kod arahan nombor, huruf dan simbol", isCorrect: true, rationale: "Berdasarkan Nota Kuliah 1, NC ialah teknik operasi mesin secara automatik mengikut kod arahan yang terdiri daripada nombor, huruf dan simbol." },
+          { text: "Kaedah melarik bahan kerja secara manual menggunakan roda tangan mekanikal", isCorrect: false, rationale: "Ini merujuk kepada kaedah pengoperasian mesin larik konvensional." },
+          { text: "Sistem penyelenggaraan mesin berasaskan jadual berkala berkomputer", isCorrect: false, rationale: "NC merujuk kepada kawalan gerakan pemotongan mesin, bukan sistem jadual penyelenggaraan." },
+          { text: "Proses mengukur ketepatan dimensi komponen menggunakan angkup vernier digital", isCorrect: false, rationale: "Ini ialah proses metrologi atau pengukuran kualiti produk." }
+        ]
+      },
+      {
+        tag: "1.2 Introduction to CNC Lathe",
+        question: "Apakah tugas utama sistem Pengawal CNC (CNC Controller) yang dianggap sebagai 'otak' bagi mesin CNC larik?",
+        options: [
+          { text: "Menerima isyarat daripada komputer atau indexer dan mentafsirkannya kepada gerakan mekanikal motor", isCorrect: true, rationale: "Pengawal melengkapkan pautan antara sistem komputer dan komponen mekanikal dengan mentafsir isyarat kepada gerakan output motor." },
+          { text: "Menyejukkan kawasan pemotongan benda kerja melalui semburan kabus", isCorrect: false, rationale: "Tugas penyejukan dilakukan oleh sistem bendalir pemotong (coolant system)." },
+          { text: "Mencengkam bahan kerja secara fizikal pada bahagian hujung pengumpar", isCorrect: false, rationale: "Pencengkaman bahan kerja secara fizikal dilakukan oleh rahang cuk (chuck jaws)." },
+          { text: "Menapis serpihan tatal logam daripada bercampur dengan minyak pelincir", isCorrect: false, rationale: "Ini dilakukan oleh penapis dalam perumah dan sistem konveyor tatal." }
+        ]
+      },
+      {
+        tag: "1.2 Fungsi dan Paksi CNC Larik",
+        question: "Berdasarkan sistem paksi mesin CNC larik, bagaimanakah nilai koordinat Paksi-Z berubah apabila mata alat bergerak menghampiri benda kerja (ke arah kiri menuju chuck)?",
+        options: [
+          { text: "Nilai paksi-Z menjadi negatif (Z-)", isCorrect: true, rationale: "Pergerakan mata alat menghampiri benda kerja atau ke kiri menghasilkan nilai Z negatif (Z-), manakala menjauhi benda kerja menghasilkan nilai Z positif (Z+)." },
+          { text: "Nilai paksi-Z menjadi positif (Z+)", isCorrect: false, rationale: "Nilai Z+ berlaku apabila mata alat bergerak menjauhi benda kerja ke arah kanan." },
+          { text: "Nilai paksi-X menjadi negatif (X-)", isCorrect: false, rationale: "Paksi-X melibatkan gerakan merentasi paksi (ke hadapan dan ke belakang), bukan gerakan membujur." },
+          { text: "Nilai paksi-Y menjadi sifar (Y0)", isCorrect: false, rationale: "Sebilangan besar mesin CNC larik asas tidak mempunyai paksi-Y." }
+        ]
+      },
+      {
+        tag: "1.2 Fungsi dan Paksi CNC Larik",
+        question: "Apakah nama yang diberikan kepada mesin CNC larik yang dilengkapi dengan Alat Penukar Automatik (Automatic Tool Changer / ATC) dan direka untuk kadar penyingkiran bahan yang agresif?",
+        options: [
+          { text: "Pusat Pusingan (Turning Center)", isCorrect: true, rationale: "Apabila CNC Larik dilengkapi dengan ATC serta ciri pengeluaran automatik, ia dipanggil pusat pusingan (turning center)." },
+          { text: "Mesin Kisar Menegak (Vertical Milling)", isCorrect: false, rationale: "Mesin kisar menggunakan mata alat berputar pada spindel utama untuk bahan kerja pegun." },
+          { text: "Mesin Larik Konvensional (Manual Lathe)", isCorrect: false, rationale: "Mesin larik manual dikendalikan sepenuhnya oleh jurumesin tanpa ATC." },
+          { text: "Mesin Pemotong Wayar (Wire-EDM)", isCorrect: false, rationale: "Wire-EDM memotong logam menggunakan nyahcas elektrik wayar halus." }
+        ]
+      },
+      {
+        tag: "1.2 G-Code & M-Code",
+        question: "Apakah perbezaan fungsi utama antara arahan G-code dan M-code dalam pengaturcaraan mesin CNC larik?",
+        options: [
+          { text: "G-code mengawal pergerakan koordinat pemotongan, manakala M-code mengaktifkan fungsi tambahan mesin", isCorrect: true, rationale: "G-code memberi arahan kepada mesin untuk melakukan pergerakan koordinat, manakala M-code mengaktifkan fungsi di dalam mesin (seperti spindel dan coolant)." },
+          { text: "G-code menghidupkan semburan penyejuk, manakala M-code menggerakkan paksi-X dan paksi-Z", isCorrect: false, rationale: "Ini adalah terbalik; semburan penyejuk dikawal oleh M-code (M08/M09) dan gerakan paksi dikawal oleh G-code." },
+          { text: "G-code hanya digunakan pada mesin menegak, manakala M-code hanya untuk mesin mendatar", isCorrect: false, rationale: "Kedua-dua jenis mesin CNC larik menggunakan gabungan G-code dan M-code yang sama." },
+          { text: "G-code melaraskan tekanan hidraulik bindu, manakala M-code menentukan saiz diameter bahan kerja", isCorrect: false, rationale: "Diameter bahan kerja ditentukan melalui koordinat X pada baris G-code." }
+        ]
+      },
+      {
+        tag: "1.2 Jenis Mesin CNC Larik",
+        question: "Apakah kelebihan utama penggunaan Mesin CNC Larik Menegak (Vertical CNC Lathe) berbanding Mesin CNC Larik Mendatar?",
+        options: [
+          { text: "Sangat sesuai dan tidak boleh diganti untuk kerja memproses komponen berdiameter besar dan berat", isCorrect: true, rationale: "Walaupun kurang biasa berbanding jenis mendatar, Vertical CNC Lathe tidak boleh diganti untuk kerja berdiameter besar kerana bantuan graviti memegang benda kerja." },
+          { text: "Menggunakan pendekatan bahasa pengaturcaraan yang sama sekali berbeza daripada mesin mendatar", isCorrect: false, rationale: "Nota kuliah menyatakan tiada perbezaan jelas dalam pendekatan pengaturcaraan antara kedua-dua jenis mesin ini." },
+          { text: "Hanya dikhaskan untuk memotong dawai halus dan aci berdiameter bawah 5 mm", isCorrect: false, rationale: "Aci berdiameter sangat kecil diproses menggunakan mesin mendatar atau Swiss-type lathe." },
+          { text: "Tidak memerlukan sebarang sistem pengawal CNC atau motor servo", isCorrect: false, rationale: "Semua mesin CNC memerlukan pengawal dan sistem pemacu servo." }
+        ]
+      },
+      {
+        tag: "1.3.1 Machine Constructions",
+        question: "Apakah fungsi komponen Perumah Besi (Sheetmetal) pada binaan mesin CNC larik?",
+        options: [
+          { text: "Perumahan pelindung yang mengandungi cip pemotong dan menangkap penyejuk untuk dikitar semula", isCorrect: true, rationale: "Sheetmetal berfungsi sebagai perumahan pelindung bagi menakung cip pemotong (tatal) dan menangkap cecair penyejuk untuk dikitar semula." },
+          { text: "Memutar bahan kerja pada kelajuan tinggi mengikut arahan atur cara", isCorrect: false, rationale: "Komponen yang memutar bahan kerja ialah pengumpar (spindle) dan cuk." },
+          { text: "Memegang dan mengindeks pelbagai mata alat pemotong ke bahagian kerja", isCorrect: false, rationale: "Komponen yang memegang dan mengindeks mata alat ialah Turret." },
+          { text: "Menempatkan papan kekunci untuk memasukkan data atur cara G-code", isCorrect: false, rationale: "Kemasukan data dilakukan pada Panel Kawalan (Control Panel)." }
+        ]
+      },
+      {
+        tag: "1.3.2 Driven System",
+        question: "Dalam sistem pemanduan (Driven System) mesin CNC larik, apakah kegunaan sistem elektropneumatik?",
+        options: [
+          { text: "Mengikat dan mengunci bahan kerja, pemegang alat, menukar alat dan pintu keselamatan mesin", isCorrect: true, rationale: "Sistem elektropneumatik digunakan untuk mengikat serta mengunci bahan kerja, pemegang alat, penukaran alat dan pintu keselamatan mesin." },
+          { text: "Menjana kod pengaturcaraan secara automatik daripada lukisan kertas", isCorrect: false, rationale: "Pengaturcaraan dilakukan oleh jurutera/pengaturcara atau perisian CAM." },
+          { text: "Menyejukkan papan litar elektronik di dalam monitor paparan CRT", isCorrect: false, rationale: "Papan elektronik disejukkan oleh kipas pengudaraan kabinet elektrik." },
+          { text: "Mengukur kekasaran permukaan benda kerja selepas proses melarik tamat", isCorrect: false, rationale: "Kekasaran permukaan diukur menggunakan alat penguji kekasaran permukaan (surface roughness tester)." }
+        ]
+      },
+      {
+        tag: "1.3.3 Chuck Size",
+        question: "Apakah kelebihan utama Cuk Empat Rahang (Four-jaw independent chuck) berbanding Cuk Tiga Rahang?",
+        options: [
+          { text: "Setiap rahang bergerak bebas, boleh diterbalikkan dan mampu memegang benda kerja bulat, persegi atau bentuk tidak sekata dengan tepat", isCorrect: true, rationale: "Setiap rahang cuk empat rahang bergerak bebas, mempunyai lengkung sepusat sebagai panduan, dan dapat memegang bentuk persegi atau tidak sama rupa." },
+          { text: "Ketiga-tiga rahang bergerak serentak secara automatik menggunakan satu kunci sahaja", isCorrect: false, rationale: "Ini adalah ciri bagi cuk tiga rahang jenis universal (self-centering)." },
+          { text: "Tidak mempunyai sebarang skru pelaras rahang pada badan cuk", isCorrect: false, rationale: "Cuk empat rahang mempunyai empat skru rahang individu untuk pelarasan bebas." },
+          { text: "Hanya boleh mencengkam bahan plastik lembut yang berdiameter kecil", isCorrect: false, rationale: "Cuk empat rahang adalah lebih kuat dan sesuai untuk kerja berat serta pelarasan jitu." }
+        ]
+      },
+      {
+        tag: "1.3.3 Chuck Specification",
+        question: "Berdasarkan Jadual 1 (Spesifikasi Jenis Chuck Tiga Rahang) di dalam nota kuliah, berapakah saiz garis pusat lubang tengah (Center Hole, D3) bagi cuk bersaiz 5\" 3-Jaw (Diameter 125 mm)?",
+        options: [
+          { text: "30 mm (1.18\")", isCorrect: true, rationale: "Mengikut Jadual 1 pada halaman 14, bagi cuk 5\" 3-Jaw (D = 125 mm), saiz Center Hole (D3) ialah 30 mm (1.18\")." },
+          { text: "16 mm (0.63\")", isCorrect: false, rationale: "Nilai 16 mm ialah saiz Center Hole bagi cuk 3\" 3-Jaw (80 mm)." },
+          { text: "22 mm (0.87\")", isCorrect: false, rationale: "Nilai 22 mm ialah saiz Center Hole bagi cuk 4\" 3-Jaw (100 mm)." },
+          { text: "40 mm (1.57\")", isCorrect: false, rationale: "Nilai 40 mm ialah saiz Center Hole bagi cuk 6\" 3-Jaw (160 mm)." }
+        ]
+      },
+      {
+        tag: "1.3.6 Turret and Capacity",
+        question: "Apakah fungsi komponen 'Blok Mata Alat' (Tool Block) pada binaan penukar mata alat (Turret)?",
+        options: [
+          { text: "Bertindak sebagai penghubung antara pemegang mata alat (tool holder) dan turret", isCorrect: true, rationale: "Blok alat bertindak sebagai penghubung antara pemegang alat dan turret, diikat dengan bolt ke muka atau perimeter turret mengikut orientasi alat." },
+          { text: "Mengukur suhu kepanasan sisipan karbida semasa memotong", isCorrect: false, rationale: "Blok mata alat ialah komponen pemegang mekanikal, bukan penderia suhu." },
+          { text: "Menyimpan minyak pelincir bagi kegunaan paksi-X dan paksi-Z", isCorrect: false, rationale: "Minyak pelincir disimpan di dalam tangki sistem pelinciran mesin." },
+          { text: "Memutar benda kerja secara serentak dengan pengumpar utama", isCorrect: false, rationale: "Benda kerja diputarkan oleh chuck pada spindel utama." }
+        ]
+      },
+      {
+        tag: "1.3.6 Turret and Capacity",
+        question: "Apakah kegunaan utama 'Live Tool (Radial Mount)' yang dipasang pada stesen turret mesin CNC larik?",
+        options: [
+          { text: "Alat berputar yang digunakan untuk penggerudian silang (cross drilling) atau pengisaran pada diameter luar bahagian", isCorrect: true, rationale: "Live Tool (Radial Mount) ialah alat berputar yang didorong oleh mekanisme di tempatnya untuk penggerudian silang atau mengisar pada diameter bahagian." },
+          { text: "Memotong putus benda kerja yang telah siap dimesin pada paksi tengah", isCorrect: false, rationale: "Operasi memotong putus dilakukan oleh mata alat pegun Parting Tool." },
+          { text: "Mencengkam batang bahan kerja panjang bagi menggantikan fungsi tailstock", isCorrect: false, rationale: "Live tool ialah alat pemotong berputar, bukan peranti penyokong benda kerja." },
+          { text: "Melarik kasar permukaan muka hadapan benda kerja secara pegun", isCorrect: false, rationale: "Kerja melarik muka secara pegun menggunakan Facing Tool biasa." }
+        ]
+      },
+      {
+        tag: "1.4.2 Type of Cutting Tools",
+        question: "Berdasarkan Rajah 24 (Gambar Mata Alat Berserta Kegunaannya), apakah kegunaan utama bagi 'Recessing Tool'?",
+        options: [
+          { text: "Melarik lurah (grooving) pada permukaan benda kerja", isCorrect: true, rationale: "Mengikut jadual Rajah 24 pada halaman 26, Recessing Tool digunakan khusus untuk melarik lurah pada benda kerja." },
+          { text: "Membuang logam dengan banyak dan cepat secara pemotongan kasar", isCorrect: false, rationale: "Membuang logam dengan banyak dan cepat adalah kegunaan Roughing Tool." },
+          { text: "Membuat benang luar pada permukaan silinder", isCorrect: false, rationale: "Membuat benang luar adalah kegunaan Threading Tool." },
+          { text: "Membuat lubang penanda kecil pada titik tengah benda kerja", isCorrect: false, rationale: "Membuat lubang penanda kecil pada titik tengah adalah kegunaan Centre Drill." }
+        ]
+      },
+      {
+        tag: "1.4.2 Type of Cutting Tools",
+        question: "Mengapakah mata alat 'Centre Drill' digunakan terlebih dahulu sebelum melakukan operasi penggerudian menggunakan 'Twist Drill'?",
+        options: [
+          { text: "Untuk membuat lubang penanda kecil yang tepat pada titik tengah permukaan benda kerja", isCorrect: true, rationale: "Centre drill menghasilkan lubang pandu/penanda kecil pada titik tengah benda kerja supaya twist drill tidak tergelincir semasa mula menggerudi." },
+          { text: "Untuk memotong putus lebihan panjang bahan kerja kepada dua bahagian", isCorrect: false, rationale: "Memotong putus benda kerja dilakukan menggunakan Parting Tool." },
+          { text: "Untuk melicinkan permukaan diameter luar aci sebelum proses membenang", isCorrect: false, rationale: "Melicinkan diameter luar dilakukan menggunakan Finishing Turn Tool." },
+          { text: "Untuk membesarkan lubang sedia ada kepada saiz toleransi yang jitu", isCorrect: false, rationale: "Membesarkan lubang sedia ada dilakukan menggunakan Boring Bar." }
+        ]
+      },
+      {
+        tag: "1.4.4 Anatomy of Carbide Insert",
+        question: "Merujuk kepada jadual pemilihan mata alat dan sisipan karbida (Rajah 27), apakah perbezaan kod nombor pesanan (Order-No.) antara sisipan untuk memotong keluli (for steel) dan aluminium (for aluminium) pada 'Roughing tool-left' (271 040)?",
+        options: [
+          { text: "Sisipan 271 045 digunakan untuk keluli (steel), manakala 271 046 digunakan untuk aluminium", isCorrect: true, rationale: "Berdasarkan Rajah 27 (halaman 31), bagi Roughing tool-left (271 040), sisipan HM-indexable 271 045 adalah 'for steel' dan 271 046 adalah 'for aluminium'." },
+          { text: "Sisipan 271 085 digunakan untuk keluli, manakala 271 105 digunakan untuk aluminium", isCorrect: false, rationale: "271 085 ialah bilah untuk Cutting-off tool, manakala 271 105 ialah sisipan membenang luar." },
+          { text: "Kedua-dua bahan keluli dan aluminium wajib menggunakan sisipan membenang 60 darjah", isCorrect: false, rationale: "Sisipan bersudut 60 darjah dikhaskan untuk pemotongan benang (threading)." },
+          { text: "Tiada sebarang perbezaan geometri atau kod antara sisipan pemotong keluli dan aluminium", isCorrect: false, rationale: "Setiap bahan mempunyai komposisi dan geometri sisipan tersendiri dengan nombor pesanan berbeza." }
+        ]
+      },
+      {
+        tag: "1.5.1 Hard Jaw and Soft Jaw",
+        question: "Berdasarkan Jadual 5 (Perbezaan Soft Jaw dan Hard Jaw), manakah antara penyataan berikut adalah BENAR mengenai ciri-ciri 'Soft Jaw'?",
+        options: [
+          { text: "Mudah dimesin, mempunyai ketepatan tinggi, dan diperbuat daripada bahan lembut seperti keluli ringan", isCorrect: true, rationale: "Jadual 5 (halaman 33) menyatakan Soft Jaw mudah dimesin, untuk komponen khusus/skala besar, ketepatan tinggi, dan daripada bahan lembut seperti keluli ringan." },
+          { text: "Tidak dapat dimesin, ketepatan rendah, dan telah melalui proses rawatan haba", isCorrect: false, rationale: "Ini adalah ciri-ciri bagi Hard Jaw seperti yang disenaraikan dalam Jadual 5." },
+          { text: "Tidak boleh dilakukan proses chamfer dan hanya untuk kegunaan komponen berbeza-beza", isCorrect: false, rationale: "Tidak boleh di-chamfer dan untuk pelbagai komponen umum adalah ciri Hard Jaw." },
+          { text: "Diperbuat daripada seramik tulen yang sangat rapuh dan tidak boleh dibentuk", isCorrect: false, rationale: "Soft jaw diperbuat daripada keluli lembut (mild steel) atau aluminium supaya mudah dimesin mengikut bentuk benda kerja." }
+        ]
+      },
+      {
+        tag: "1.5.2 Fixturing and Accessories",
+        question: "Bilakah lekapan tambahan (Fixturing) perlu dihasilkan sendiri atau digunakan pada mesin CNC larik?",
+        options: [
+          { text: "Apabila perlu memegang bahan kerja yang bentuknya tidak dapat dicengkam dengan Chuck biasa", isCorrect: true, rationale: "Seksyen 1.5.2 menyatakan lekapan alatan tambahan adalah bagi membantu memegang bahan yang tidak dapat dilakukan dengan Chuck biasa." },
+          { text: "Apabila jurumesin ingin mencengkam bar silinder bulat standard berdiameter 25 mm", isCorrect: false, rationale: "Bar bulat standard boleh dicengkam terus dengan mudah menggunakan Chuck 3-rahang biasa." },
+          { text: "Apabila mesin CNC larik kehabisan minyak pelincir landasan", isCorrect: false, rationale: "Masalah pelinciran tiada kaitan dengan penggunaan lekapan pemegang benda kerja." },
+          { text: "Semasa hendak menukar paparan skrin daripada mod posisi kepada mod program", isCorrect: false, rationale: "Penukaran paparan skrin dilakukan menerusi butang pada panel kawalan." }
+        ]
+      },
+      {
+        tag: "1.7 Machine Control Panel",
+        question: "Pada panel kawalan mesin CNC larik (Rajah 2), apakah fungsi kumpulan tetapan 'WEAR' dan 'GEOM' yang tertera pada skrin paparan?",
+        options: [
+          { text: "Melaraskan nilai pampasan kehausan (Wear) dan geometri ukuran panjang/jejari mata alat dalam Offset Mode", isCorrect: true, rationale: "Dalam Offset Mode, GEOM menyimpan ukuran panjang dan jejari geometri mata alat, manakala WEAR digunakan untuk melaras pampasan kehausan kecil mata alat." },
+          { text: "Mengubah kelajuan kipas penyejuk di dalam kabinet elektrik utama", isCorrect: false, rationale: "WEAR dan GEOM adalah parameter pampasan mata alat (Tool Offset), bukan kawalan kipas." },
+          { text: "Memilih bahasa pengantaramuka skrin monitor sama ada Bahasa Melayu atau Inggeris", isCorrect: false, rationale: "Tetapan bahasa terletak di dalam parameter sistem mesin." },
+          { text: "Mematikan bekalan kuasa kecemasan secara automatik apabila pintu dibuka", isCorrect: false, rationale: "Bekalan kecemasan dikawal oleh litar keselamatan Emergency Stop dan interlock pintu." }
+        ]
+      },
+      {
+        tag: "1.7.6 Override Switches",
+        question: "Apakah peranan suis tombol 'Feedrate Override', 'Spindle Override' dan 'Rapid Override' pada panel kawalan mesin CNC larik?",
+        options: [
+          { text: "Membolehkan pengendali mengawal dan mengubah suai peratusan kelajuan suapan, putaran spindel, dan gerakan pantas semasa mesin beroperasi", isCorrect: true, rationale: "Suis override membenarkan pengendali melaras peratusan kelajuan sebenar (seperti merendahkan suapan semasa menguji program baharu) tanpa perlu mengubah kod program." },
+          { text: "Menukar kedudukan paksi-X menjadi paksi-Z secara kekal di dalam memori mesin", isCorrect: false, rationale: "Paksi mesin ditetapkan secara fizikal dan parameter sistem, bukan melalui suis override." },
+          { text: "Mengunci rahang bindu supaya tidak boleh dibuka walaupun selepas mesin berhenti", isCorrect: false, rationale: "Cengkaman bindu dikawal oleh suis kaki (foot switch) atau kod M10/M11." },
+          { text: "Memadamkan keseluruhan program G-code daripada memori pengawal dengan satu sentuhan", isCorrect: false, rationale: "Memadam program hanya boleh dilakukan dalam mod EDIT dengan kunci pelindung program dibuka." }
+        ]
+      }
+    ];
+
+    let currentQuestionIdx = 0;
+    let score = 0;
+    let studentData = { name: "", id: "", program: "" };
+
+    function startQuiz(e) {
+      e.preventDefault();
+      const name = document.getElementById('student-name').value.trim();
+      const id = document.getElementById('student-id').value.trim();
+      const program = document.getElementById('student-program').value.trim();
+
+      if (!name || !id) return;
+
+      studentData = { name, id, program };
+      document.getElementById('header-student-info').innerText = `${name} (${id.toUpperCase()})`;
+
+      document.getElementById('start-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+
+      renderQuestion();
+    }
+
+    function renderQuestion() {
+      const q = quizData[currentQuestionIdx];
+      document.getElementById('current-q-num').innerText = currentQuestionIdx + 1;
+      document.getElementById('question-tag').innerText = q.tag;
+      document.getElementById('question-text').innerText = `${currentQuestionIdx + 1}. ${q.question}`;
+      
+      const progressPercent = ((currentQuestionIdx + 1) / quizData.length) * 100;
+      document.getElementById('progress-bar').style.width = `${progressPercent}%`;
+
+      const optContainer = document.getElementById('options-container');
+      optContainer.innerHTML = '';
+
+      const feedbackBox = document.getElementById('feedback-box');
+      feedbackBox.classList.add('hidden');
+      const nextBtn = document.getElementById('next-btn');
+      nextBtn.disabled = true;
+
+      q.options.forEach((opt, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        btn.className = `w-full text-left p-4 rounded-xl border-2 border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-50/50 transition-all flex items-start gap-3 group`;
+        btn.onclick = () => selectOption(idx);
+        btn.innerHTML = `
+          <span class="w-7 h-7 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center text-xs font-bold shrink-0 group-hover:bg-blue-600 group-hover:text-white transition">
+            ${String.fromCharCode(65 + idx)}
+          </span>
+          <span class="text-sm font-medium text-slate-800 leading-relaxed">${opt.text}</span>
+        `;
+        optContainer.appendChild(btn);
+      });
+    }
+
+    function selectOption(selectedIdx) {
+      const q = quizData[currentQuestionIdx];
+      const optButtons = document.getElementById('options-container').children;
+      const selectedOption = q.options[selectedIdx];
+      const isCorrect = selectedOption.isCorrect;
+
+      for (let i = 0; i < optButtons.length; i++) {
+        optButtons[i].disabled = true;
+        optButtons[i].classList.remove('hover:border-blue-400', 'hover:bg-blue-50/50', 'group');
+        
+        if (q.options[i].isCorrect) {
+          optButtons[i].classList.remove('border-slate-200', 'bg-white');
+          optButtons[i].classList.add('border-emerald-500', 'bg-emerald-50');
+          optButtons[i].querySelector('span').classList.remove('bg-slate-100', 'text-slate-700');
+          optButtons[i].querySelector('span').classList.add('bg-emerald-600', 'text-white');
+        } else if (i === selectedIdx && !isCorrect) {
+          optButtons[i].classList.remove('border-slate-200', 'bg-white');
+          optButtons[i].classList.add('border-rose-500', 'bg-rose-50');
+          optButtons[i].querySelector('span').classList.remove('bg-slate-100', 'text-slate-700');
+          optButtons[i].querySelector('span').classList.add('bg-rose-600', 'text-white');
+        }
+      }
+
+      if (isCorrect) {
+        score++;
+        document.getElementById('score-counter').innerText = `Markah: ${score} / 20`;
+      }
+
+      const feedbackBox = document.getElementById('feedback-box');
+      const feedbackTitle = document.getElementById('feedback-title');
+      const feedbackDesc = document.getElementById('feedback-desc');
+
+      feedbackBox.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-200', 'bg-rose-50', 'border-rose-200');
+      if (isCorrect) {
+        feedbackBox.classList.add('bg-emerald-50', 'border-emerald-200');
+        feedbackTitle.className = 'font-bold text-sm text-emerald-800 mb-1';
+        feedbackTitle.innerHTML = '<i class="fa-solid fa-circle-check mr-1 text-emerald-600"></i> Jawapan Tepat!';
+      } else {
+        feedbackBox.classList.add('bg-rose-50', 'border-rose-200');
+        feedbackTitle.className = 'font-bold text-sm text-rose-800 mb-1';
+        feedbackTitle.innerHTML = '<i class="fa-solid fa-circle-xmark mr-1 text-rose-600"></i> Kurang Tepat!';
+      }
+      feedbackDesc.innerText = selectedOption.rationale;
+
+      document.getElementById('next-btn').disabled = false;
+      if (currentQuestionIdx === quizData.length - 1) {
+        document.getElementById('next-btn').innerHTML = '<span>Lihat Keputusan & Sijil</span> <i class="fa-solid fa-award"></i>';
+      } else {
+        document.getElementById('next-btn').innerHTML = '<span>Seterusnya</span> <i class="fa-solid fa-chevron-right text-xs"></i>';
+      }
+    }
+
+    function nextQuestion() {
+      if (currentQuestionIdx < quizData.length - 1) {
+        currentQuestionIdx++;
+        renderQuestion();
+      } else {
+        showResults();
+      }
+    }
+
+    function showResults() {
+      document.getElementById('quiz-screen').classList.add('hidden');
+      document.getElementById('result-screen').classList.remove('hidden');
+
+      const total = quizData.length;
+      const wrong = total - score;
+      const percent = Math.round((score / total) * 100);
+
+      document.getElementById('res-correct').innerText = score;
+      document.getElementById('res-wrong').innerText = wrong;
+      document.getElementById('res-percentage').innerText = `${percent}%`;
+
+      const resIcon = document.getElementById('result-icon');
+      const resTitle = document.getElementById('result-title');
+      const resSub = document.getElementById('result-subtitle');
+      const certGrade = document.getElementById('cert-grade');
+
+      let gradeText = "";
+      if (percent >= 80) {
+        resIcon.className = "w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-emerald-100 text-emerald-600";
+        resIcon.innerHTML = '<i class="fa-solid fa-trophy"></i>';
+        resTitle.innerText = "Tahniah! Pencapaian Cemerlang";
+        resSub.innerText = "Anda telah menguasai topik Bab 1: CNC Lathe Features and Accessories dengan sangat baik.";
+        gradeText = `LULUS CEMERLANG (${percent}% - ${score}/20)`;
+        certGrade.className = "text-emerald-700";
+      } else if (percent >= 50) {
+        resIcon.className = "w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-blue-100 text-blue-600";
+        resIcon.innerHTML = '<i class="fa-solid fa-medal"></i>';
+        resTitle.innerText = "Syabas! Anda Telah Lulus Penilaian";
+        resSub.innerText = "Anda telah memahami asas komponen dan aksesori CNC Larik. Teruskan usaha anda!";
+        gradeText = `LULUS KEPUJIAN (${percent}% - ${score}/20)`;
+        certGrade.className = "text-blue-700";
+      } else {
+        resIcon.className = "w-20 h-20 rounded-full flex items-center justify-center text-4xl mx-auto mb-4 bg-amber-100 text-amber-600";
+        resIcon.innerHTML = '<i class="fa-solid fa-book-open-reader"></i>';
+        resTitle.innerText = "Penilaian Selesai";
+        resSub.innerText = "Sila ulang kaji semula Nota Kuliah 1 untuk memantapkan kefahaman anda dan cuba lagi.";
+        gradeText = `PENYERTAAN (${percent}% - ${score}/20)`;
+        certGrade.className = "text-amber-700";
+      }
+
+      // Populate Certificate
+      document.getElementById('cert-name').innerText = studentData.name;
+      document.getElementById('cert-id').innerText = `ANGKA GILIRAN: ${studentData.id.toUpperCase()}`;
+      certGrade.innerText = gradeText;
+
+      const today = new Date();
+      const formattedDate = today.toLocaleDateString('ms-MY', {
+        day: '2-digit', month: 'long', year: 'numeric'
+      });
+      document.getElementById('cert-date').innerText = formattedDate;
+    }
+
+    function restartQuiz() {
+      currentQuestionIdx = 0;
+      score = 0;
+      document.getElementById('score-counter').innerText = `Markah: 0 / 20`;
+      document.getElementById('result-screen').classList.add('hidden');
+      document.getElementById('quiz-screen').classList.remove('hidden');
+      renderQuestion();
+    }
+  </script>
+</body>
+</html>
